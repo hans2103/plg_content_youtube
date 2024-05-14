@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+    <update>
+        <name>YouTube video embed for Joomla</name>
+        <description>This is a Joomla! plugin which replace `{youtube url}` by the Youtube video. Initially only the YouTube image and a button. After pressing the button both elements are replaced by the YouTube embed iframe and the video starts.</description>
+        <element>youtube</element>
+        <type>plugin</type>
+        <client>site</client>
+        <folder>content</folder>
+        <version>0.1.0</version>
+        <infourl title="YouTube video embed for Joomla">https://github.com/hans2103/plg_content_youtube/releases/tag/0.1.0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/hans2103/plg_content_youtube/releases/download/0.1.0/plg_content_youtube.zip</downloadurl>
+        </downloads>
+        <sha512>e3bf12fe846647397b70beb8e4347d2b493379c0e35e40422fdacbdf8dc452588d51091b29daa6be2a1d8280ba82e8c81d4293ffe62a9f5937a93d94a99fd2f4</sha512>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <targetplatform name="joomla" version="5.(0|1)" />
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+</updates>

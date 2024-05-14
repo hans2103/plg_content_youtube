@@ -74,7 +74,7 @@ final class YouTube extends CMSPlugin
 			if (($start = strpos($article->text, $match[0])) !== false) {
 				$youtubeVideoId = self::getYoutubeVideoId($match[1]);
 
-				$output = LayoutHelper::debug(
+				$output = LayoutHelper::render(
 					'media.youtube',
 					[
 						'videoId' => $youtubeVideoId,
