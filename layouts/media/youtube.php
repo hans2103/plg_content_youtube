@@ -29,8 +29,8 @@ $videoId = $videoId ?? false;
 if ($videoId) {
 	/** @var WebAssetManager $wa */
 	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-	$wa->registerAndUseScript('youtubeJS', 'media/plg_content-youtube/js/YouTubeContainer.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module'])
-		->registerAndUseStyle('youtubeCSS', 'media/plg_content-youtube/css/YouTubeContainer.css');
+	$wa->registerAndUseScript('youtubeJS', 'media/plg_content_youtube/js/YouTubeContainer.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module'])
+		->registerAndUseStyle('youtubeCSS', 'media/plg_content_youtube/css/YouTubeContainer.css');
 
 	$wrapperAttribs = [];
 	$wrapperAttribs['class'] = 'frame__wrapper ' . $params->get('wrapper_class', '');
