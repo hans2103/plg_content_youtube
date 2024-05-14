@@ -1,0 +1,123 @@
+/* ==========================================================================
+   YouTube container
+   ========================================================================== */
+
+:root {
+  --youtube-frame-border-color: currentColor;
+  --youtube-frame-border-radius: var(--border-radius-xxl);
+}
+
+.frame__wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--youtube-frame-border-color);
+  border-radius: var(--youtube-frame-border-radius);
+
+  @media print {
+    display: none;
+  }
+
+  .embed-youtube {
+    position: relative;
+
+    .embed-youtube-play {
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      z-index: 1;
+      inline-size: 4.25rem;
+      block-size: 3rem;
+      cursor: pointer;
+      background-color: #333;
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 0 0 30px hsla(0, 0%, 0%, .6);
+      opacity: .8;
+
+      &::before {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        content: "";
+        border-color: transparent transparent transparent #fff;
+        border-style: solid;
+        border-width: 15px 0 15px 26px
+      }
+
+      &:hover {
+        background-color: red
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Visibility
+   ========================================================================== */
+
+.visually\:hidden {
+  position: absolute;
+  overflow: hidden;
+  backface-visibility: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: none;
+}
+
+
+/* ==========================================================================
+   Ratio blocks
+   ========================================================================== */
+
+[class*="ratio:"] {
+  position: relative;
+
+  & > img {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    display: block;
+    max-inline-size: 100%;
+    transform: translate(-50%, -50%);
+
+    @supports (object-fit: cover) {
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      min-block-size: 100%;
+      transform: none;
+      object-fit: cover;
+    }
+  }
+
+  & > embed,
+  & > iframe,
+  & > video {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+
+    @supports (object-fit: cover) {
+      min-block-size: 0;
+      transform: none;
+      object-fit: cover;
+    }
+  }
+}
+
+
+/* Landscape style ratios
+   ========================================================================== */
+
+.ratio\:16\:9 {
+  aspect-ratio: 16 / 9;
+}
