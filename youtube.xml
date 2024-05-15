@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@hkweb.nl</authorEmail>
 	<authorUrl>hkweb.nl</authorUrl>
-	<version>1.0.0</version>
+	<version>0.3.0</version>
 	<description>PLG_YOUTUBE_XML_DESCRIPTION</description>
 	<namespace path="src">HKweb\Plugin\Content\YouTube</namespace>
 	<files>
