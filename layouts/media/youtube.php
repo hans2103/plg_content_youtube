@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package     Joomla.Plugin
- * @subpackage  Layout.media.youtube
+ * @package         Joomla.Plugin
+ * @subpackage      Layout.media.youtube
  *
  * @copyright   (C) 2024 HKweb <https://hkweb.nl>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('JPATH_BASE') or die;
@@ -17,28 +17,30 @@ use Joomla\Utilities\ArrayHelper;
 
 /**
  *
- * @param string $videoId The YouTube video ID
- * @param object $params The plugin params
+ * @param   string  $id      The YouTube video ID
+ * @param   object  $params  The plugin params
  */
 
 /** @var array $displayData */
 extract($displayData);
 
-$videoId = $videoId ?? false;
+$id         = $id ?? false;
+$figcaption = $title ?? false;
 
-if ($videoId) {
+if ($id)
+{
 	/** @var WebAssetManager $wa */
 	$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 	$wa->registerAndUseScript('youtubeJS', 'media/plg_content_youtube/js/YouTubeContainer.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module'])
 		->registerAndUseStyle('youtubeCSS', 'media/plg_content_youtube/css/YouTubeContainer.css');
 
-	$wrapperAttribs = [];
+	$wrapperAttribs          = [];
 	$wrapperAttribs['class'] = 'frame__wrapper ' . $params->get('wrapper_class', '');
 
-	$videoAttribs = [];
-	$videoAttribs['class'] = 'embed-youtube ratio:16:9';
-	$videoAttribs['data-video-id'] = $videoId;
-	$videoAttribs['data-video-src'] = 'https://img.youtube.com/vi/' . $videoId . '/maxresdefault.jpg';
+	$videoAttribs                      = [];
+	$videoAttribs['class']             = 'embed-youtube ratio:16:9';
+	$videoAttribs['data-video-id']     = $id;
+	$videoAttribs['data-video-src']    = 'https://img.youtube.com/vi/' . $id . '/maxresdefault.jpg';
 	$videoAttribs['data-video-srcset'] = '';
 
 	echo '<figure ' . ArrayHelper::toString($wrapperAttribs) . '>';
@@ -49,5 +51,9 @@ if ($videoId) {
 	echo '</button>';
 	echo '</div>';
 	echo '</div>';
+	if ($figcaption)
+	{
+		echo '<figcaption class="frame__caption">' . $figcaption . '</figcaption>';
+	}
 	echo '</figure>';
 }
