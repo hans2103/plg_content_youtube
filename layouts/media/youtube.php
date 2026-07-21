@@ -37,10 +37,12 @@ if ($id)
 	$wrapperAttribs          = [];
 	$wrapperAttribs['class'] = 'frame__wrapper ' . $params->get('wrapper_class', '');
 
+	$thumbnailQuality = $params->get('thumbnail_quality', 'hqdefault');
+
 	$videoAttribs                      = [];
 	$videoAttribs['class']             = 'embed-youtube ratio:16:9';
 	$videoAttribs['data-video-id']     = $id;
-	$videoAttribs['data-video-src']    = 'https://img.youtube.com/vi/' . $id . '/maxresdefault.jpg';
+	$videoAttribs['data-video-src']    = 'https://img.youtube.com/vi/' . $id . '/' . $thumbnailQuality . '.jpg';
 	$videoAttribs['data-video-srcset'] = '';
 
 	echo '<figure ' . ArrayHelper::toString($wrapperAttribs) . '>';

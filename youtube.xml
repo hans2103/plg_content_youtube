@@ -33,6 +33,16 @@
 					default=""
 					filter="string"
 				/>
+				<field
+					name="thumbnail_quality"
+					type="list"
+					label="PLG_CONTENT_YOUTUBE_THUMBNAILQUALITY_LABEL"
+					default="hqdefault"
+					filter="string"
+				>
+					<option value="hqdefault">PLG_CONTENT_YOUTUBE_THUMBNAILQUALITY_HQDEFAULT</option>
+					<option value="maxresdefault">PLG_CONTENT_YOUTUBE_THUMBNAILQUALITY_MAXRESDEFAULT</option>
+				</field>
 			</fieldset>
 		</fields>
 	</config>
