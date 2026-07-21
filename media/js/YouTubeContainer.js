@@ -39,8 +39,15 @@
 				iframe.setAttribute('allowfullscreen', '');
 				iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
 				// Important: add the autoplay GET parameter, otherwise the user would need to click over the YouTube video again to play it
+				// Important: origin must be set, otherwise the YouTube player can fail to initialise (error 153) under strict third-party cookie/storage partitioning
 				iframe.setAttribute('loading', 'lazy');
-				iframe.setAttribute('src', 'https://www.youtube.com/embed/' + this.dataset.videoId + '?disablekb=1&rel=0&showinfo=0&autoplay=1');
+				let embedParams = new URLSearchParams({
+					disablekb: '1',
+					rel: '0',
+					autoplay: '1',
+					origin: window.location.origin
+				});
+				iframe.setAttribute('src', 'https://www.youtube.com/embed/' + this.dataset.videoId + '?' + embedParams.toString());
 
 				// Clear Thumbnail and load the YouTube iframe
 				this.innerHTML = '';

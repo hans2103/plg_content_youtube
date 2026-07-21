@@ -7,12 +7,12 @@
         <type>plugin</type>
         <client>site</client>
         <folder>content</folder>
-        <version>0.3.0</version>
-        <infourl title="YouTube video embed for Joomla">https://github.com/hans2103/plg_content_youtube/releases/tag/0.3.0</infourl>
+        <version>26.30.0</version>
+        <infourl title="YouTube video embed for Joomla">https://github.com/hans2103/plg_content_youtube/releases/tag/26.30.0</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/hans2103/plg_content_youtube/releases/download/0.3.0/plg_content_youtube.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/hans2103/plg_content_youtube/releases/download/26.30.0/plg_content_youtube.zip</downloadurl>
         </downloads>
-        <sha512>8dfc94c97f2243121364dd094cdc3e7ddee00cd41bcf65fcabde0f76cb5859f846b84f549919e3e34996e6b602f24db2d52800c1c08cd271cf05e435e6e31e6d</sha512>
+        <sha512>f991a0d33271b06c1efe90dcd338d712fd605c95c40caa93d4af6980f1c968608806b862e8f3f18f881a48d5da3db9cb0f082483b636af9a2023b1882ffad723</sha512>
         <tags>
             <tag>stable</tag>
         </tags>
