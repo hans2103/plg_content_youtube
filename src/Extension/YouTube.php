@@ -10,7 +10,7 @@
 
 namespace HKweb\Plugin\Content\YouTube\Extension;
 
-use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 
@@ -72,7 +72,10 @@ final class YouTube extends CMSPlugin
 			return false;
 		}
 
-		$basePath = JPATH_PLUGINS . '/content/youtube/layouts';
+		// Template overrides (html/layouts/media/youtube.php) first, the plugin's own layout as fallback.
+		// Passing the plugin path as $basePath to LayoutHelper::render() would give it the highest priority.
+		$layout = new FileLayout('media.youtube');
+		$layout->setIncludePaths(array_merge($layout->getIncludePaths(), [JPATH_PLUGINS . '/content/youtube/layouts']));
 
 		foreach ($matches as $match)
 		{
@@ -85,14 +88,12 @@ final class YouTube extends CMSPlugin
 				$data          = $this->extractContent($match[1], ['title']);
 				$data['id'] = self::getYoutubeVideoId($match[1]);
 
-				$output = LayoutHelper::render(
-					'media.youtube',
+				$output = $layout->render(
 					[
 						'id'  => $data['id'],
 						'title'  => $data['title'],
 						'params' => $this->params
-					],
-					$basePath
+					]
 				);
 
 				$article->text = substr_replace($article->text, $output, $start, strlen($match[0]));
