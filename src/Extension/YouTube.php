@@ -10,7 +10,7 @@
 
 namespace HKweb\Plugin\Content\YouTube\Extension;
 
-use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 
@@ -27,18 +27,26 @@ use Joomla\CMS\Plugin\PluginHelper;
 final class YouTube extends CMSPlugin
 {
 	/**
+	 * Load the language file on instantiation (used for the button label and iframe title).
+	 *
+	 * @var    boolean
+	 * @since  26.45.0
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
 	 * Plugin that loads YouTube embed within content
 	 *
 	 * @param   string    $context  The context of the content being passed to the plugin.
 	 * @param   object   &$article  The article object.  Note $article->text is also available
 	 * @param   mixed    &$params   The article params
-	 * @param   integer   $page     The 'page' number
+	 * @param   integer|null  $page  The 'page' number; some components (e.g. com_contact) pass null
 	 *
 	 * @return  boolean
 	 *
 	 * @since   1.6
 	 */
-	public function onContentPrepare(string $context, object &$article, mixed &$params, int $page = 0): bool
+	public function onContentPrepare(string $context, object &$article, mixed &$params, ?int $page = 0): bool
 	{
 		// Only execute if $article is an object and has a text property
 		if (!\is_object($article) || !property_exists($article, 'text') || \is_null($article->text))
@@ -72,7 +80,10 @@ final class YouTube extends CMSPlugin
 			return false;
 		}
 
-		$basePath = JPATH_PLUGINS . '/content/youtube/layouts';
+		// Template overrides first (templates/<template>/html/layouts/plugins/content/youtube/embed.php),
+		// then the plugin's own layout.
+		$layout = new FileLayout('plugins.content.youtube.embed');
+		$layout->setIncludePaths(array_merge($layout->getDefaultIncludePaths(), [JPATH_PLUGINS . '/content/youtube/layouts']));
 
 		foreach ($matches as $match)
 		{
@@ -85,14 +96,12 @@ final class YouTube extends CMSPlugin
 				$data          = $this->extractContent($match[1], ['title']);
 				$data['id'] = self::getYoutubeVideoId($match[1]);
 
-				$output = LayoutHelper::render(
-					'media.youtube',
+				$output = $layout->render(
 					[
-						'id'  => $data['id'],
+						'id'     => $data['id'],
 						'title'  => $data['title'],
-						'params' => $this->params
-					],
-					$basePath
+						'params' => $this->params,
+					]
 				);
 
 				$article->text = substr_replace($article->text, $output, $start, strlen($match[0]));
@@ -169,10 +178,13 @@ final class YouTube extends CMSPlugin
 		{
 			if ($argument === 'title')
 			{
-				// Find the first "
-				$firstQuote      = strpos($content, '"');
-				$secondQuote     = strpos($content, '"', $firstQuote + 1);
-				$data[$argument] = $this->cleanDoubleQuotes(trim(substr($content, $firstQuote, $secondQuote)));
+				// The title is the text between the first pair of double quotes; without quotes there is no title
+				$firstQuote  = strpos($content, '"');
+				$secondQuote = $firstQuote === false ? false : strpos($content, '"', $firstQuote + 1);
+
+				$data[$argument] = ($firstQuote === false || $secondQuote === false)
+					? ''
+					: trim(substr($content, $firstQuote + 1, $secondQuote - $firstQuote - 1));
 			}
 			else
 			{

@@ -1,0 +1,119 @@
+/* ==========================================================================
+   plg_content_youtube – privacy-friendly embed with <details>/<summary>
+
+   Everything sits in @layer plg-content-youtube, so any template CSS (layered or
+   not) wins without extra specificity. Theme it with the custom properties below,
+   or override the whole file at media/templates/site/<template>/css/plg_content_youtube/youtube.css.
+   ========================================================================== */
+
+@layer plg-content-youtube {
+	.youtube {
+		--youtube-radius: 0;
+		--youtube-play-size: clamp(3.5rem, 2.5rem + 4vw, 5rem);
+		--youtube-play-background: #c00;
+		--youtube-play-background-hover: #900;
+		--youtube-play-color: #fff;
+		--youtube-focus-color: currentColor;
+		--youtube-caption-color: inherit;
+
+		margin: 1.5rem 0;
+
+		@media print {
+			display: none;
+		}
+	}
+
+	.youtube__details {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		border-radius: var(--youtube-radius);
+		background: #000;
+	}
+
+	.youtube__summary {
+		display: grid;
+		block-size: 100%;
+		cursor: pointer;
+		list-style: none;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		& > * {
+			grid-area: 1 / 1;
+		}
+
+		&:focus-visible {
+			outline: 3px solid var(--youtube-focus-color);
+			outline-offset: -6px;
+		}
+
+		.youtube__details[open] & {
+			display: none;
+		}
+	}
+
+	.youtube__thumbnail {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover; /* hqdefault is 4:3 with black bars; cover crops them away */
+	}
+
+	.youtube__play {
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		place-self: center;
+		inline-size: var(--youtube-play-size);
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: var(--youtube-play-background);
+		color: var(--youtube-play-color);
+		box-shadow: 0 .25rem 1.5rem rgb(0 0 0 / .35);
+		transition: background-color .15s ease, scale .15s ease;
+
+		& svg {
+			inline-size: 45%;
+			margin-inline-start: 8%;
+			fill: currentColor;
+		}
+
+		.youtube__summary:hover & {
+			background: var(--youtube-play-background-hover);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			.youtube__summary:hover & {
+				scale: 1.08;
+			}
+		}
+	}
+
+	.youtube__label {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.youtube__player {
+		position: absolute;
+		inset: 0;
+
+		& iframe {
+			inline-size: 100%;
+			block-size: 100%;
+			border: 0;
+		}
+	}
+
+	.youtube__caption {
+		margin-block-start: .5rem;
+		color: var(--youtube-caption-color);
+		font-size: .9em;
+	}
+}

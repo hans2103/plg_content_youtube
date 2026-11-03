@@ -2,7 +2,7 @@
 <updates>
     <update>
         <name>YouTube video embed for Joomla</name>
-        <description>This is a Joomla! plugin which replace `{youtube url}` by the Youtube video. Initially only the YouTube image and a button. After pressing the button both elements are replaced by the YouTube embed iframe and the video starts.</description>
+        <description>Privacy-friendly YouTube embed for Joomla: {youtube url "caption"} shows only a thumbnail until the visitor clicks, then plays via youtube-nocookie.com. No JavaScript.</description>
         <element>youtube</element>
         <type>plugin</type>
         <client>site</client>
@@ -16,7 +16,7 @@
         <tags>
             <tag>stable</tag>
         </tags>
-        <targetplatform name="joomla" version="5.(0|1)" />
+        <targetplatform name="joomla" version="(5|6)\..*" />
         <php_minimum>8.0.0</php_minimum>
     </update>
 </updates>
