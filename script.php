@@ -21,6 +21,25 @@ class plgContentYoutubeInstallerScript extends InstallerScript
 	protected $minimumPHPVersion = '8.0.0';
 	protected $minimumJoomlaVersion = '5.0.0';
 
+	/**
+	 * Files and folders of versions before 26.45.0 (JavaScript embed), removed on update.
+	 *
+	 * @var array
+	 */
+	protected $deleteFiles = [
+		'/plugins/content/youtube/layouts/media/youtube.php',
+		'/media/plg_content_youtube/css/YouTubeContainer.css',
+		'/media/plg_content_youtube/js/YouTubeContainer.js',
+	];
+
+	/**
+	 * @var array
+	 */
+	protected $deleteFolders = [
+		'/plugins/content/youtube/layouts/media',
+		'/media/plg_content_youtube/js',
+	];
+
 	public function install($parent)
 	{
 		// Enable the extension
@@ -64,6 +83,10 @@ class plgContentYoutubeInstallerScript extends InstallerScript
 
 	public function postflight($type, $parent)
 	{
+		if ($type === 'update')
+		{
+			$this->removeFiles();
+		}
 	}
 
 	private function enablePlugin()

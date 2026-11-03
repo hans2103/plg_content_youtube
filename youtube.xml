@@ -7,8 +7,9 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@hkweb.nl</authorEmail>
 	<authorUrl>hkweb.nl</authorUrl>
-	<version>26.30.0</version>
+	<version>26.45.0</version>
 	<description>PLG_YOUTUBE_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
 	<namespace path="src">HKweb\Plugin\Content\YouTube</namespace>
 	<files>
 		<folder plugin="youtube">services</folder>
@@ -17,11 +18,12 @@
 	</files>
 	<media destination="plg_content_youtube" folder="media">
 		<folder>css</folder>
-		<folder>js</folder>
 	</media>
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_youtube.ini</language>
 		<language tag="en-GB">language/en-GB/plg_content_youtube.sys.ini</language>
+		<language tag="nl-NL">language/nl-NL/plg_content_youtube.ini</language>
+		<language tag="nl-NL">language/nl-NL/plg_content_youtube.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
@@ -47,6 +49,6 @@
 		</fields>
 	</config>
 	<updateservers>
-		<server type="extension" name="YouTube content plugin for Joomla">https://raw.githubusercontent.com/hans2103/plg_content_youtube/master/manifest.xml</server>
+		<server type="extension" name="YouTube content plugin for Joomla">https://raw.githubusercontent.com/hans2103/plg_content_youtube/main/manifest.xml</server>
 	</updateservers>
 </extension>
