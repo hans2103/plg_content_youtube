@@ -35,6 +35,15 @@ final class YouTube extends CMSPlugin
 	protected $autoloadLanguage = true;
 
 	/**
+	 * Number of embeds rendered in this request. The first one is likely above the fold (and often
+	 * the LCP element), so its thumbnail loads eagerly with a high fetch priority.
+	 *
+	 * @var    integer
+	 * @since  26.47.0
+	 */
+	private int $rendered = 0;
+
+	/**
 	 * Plugin that loads YouTube embed within content
 	 *
 	 * @param   string    $context  The context of the content being passed to the plugin.
@@ -98,11 +107,17 @@ final class YouTube extends CMSPlugin
 
 				$output = $layout->render(
 					[
-						'id'     => $data['id'],
-						'title'  => $data['title'],
-						'params' => $this->params,
+						'id'       => $data['id'],
+						'title'    => $data['title'],
+						'params'   => $this->params,
+						'priority' => $data['id'] !== null && $this->rendered === 0,
 					]
 				);
+
+				if ($data['id'] !== null)
+				{
+					$this->rendered++;
+				}
 
 				$article->text = substr_replace($article->text, $output, $start, strlen($match[0]));
 			}
