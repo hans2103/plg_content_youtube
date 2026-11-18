@@ -19,7 +19,9 @@
  * @var  array                      $displayData
  * @var  string|null                $id      YouTube video id
  * @var  string                     $title   Optional caption / accessible title
- * @var  \Joomla\Registry\Registry  $params  Plugin params
+ * @var  \Joomla\Registry\Registry  $params    Plugin params
+ * @var  bool                       $priority  First embed in the request: load the thumbnail eagerly
+ *                                             with fetchpriority="high" (often the LCP element)
  */
 
 \defined('JPATH_BASE') or die;
@@ -30,7 +32,8 @@ use Joomla\CMS\Language\Text;
 extract($displayData);
 
 $id    = $id ?? null;
-$title = trim((string) ($title ?? ''));
+$title    = trim((string) ($title ?? ''));
+$priority = !empty($priority);
 
 if (!$id) {
 	return;
@@ -45,6 +48,7 @@ $thumbnailBase = 'https://img.youtube.com/vi/' . rawurlencode($id) . '/';
 $srcset        = [
 	$thumbnailBase . 'mqdefault.jpg 320w',
 	$thumbnailBase . 'hqdefault.jpg 480w',
+	$thumbnailBase . 'sddefault.jpg 640w',
 ];
 
 // maxresdefault does not exist for every (older) video; only offer it when the site chose it
@@ -64,7 +68,8 @@ $wrapper     = trim('youtube ' . $params->get('wrapper_class', ''));
 				src="<?php echo $escape($thumbnailBase . 'hqdefault.jpg'); ?>"
 				srcset="<?php echo $escape(implode(', ', $srcset)); ?>"
 				sizes="(min-width: 80rem) 80rem, 100vw"
-				width="1280" height="720" alt="" loading="lazy" decoding="async">
+				width="1280" height="720" alt=""
+				<?php echo $priority ? 'fetchpriority="high"' : 'loading="lazy"'; ?> decoding="async">
 			<span class="youtube__play" aria-hidden="true">
 				<svg viewBox="0 0 32 32" focusable="false"><path d="m11.17 5.61 16.28 8.47a2.17 2.17 0 0 1 0 3.84L11.17 26.4A2.17 2.17 0 0 1 8 24.47V7.53a2.17 2.17 0 0 1 3.17-1.92z"/></svg>
 			</span>
