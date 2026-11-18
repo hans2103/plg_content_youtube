@@ -1,9 +1,11 @@
 /* ==========================================================================
    plg_content_youtube – privacy-friendly embed with <details>/<summary>
 
-   Everything sits in @layer plg-content-youtube, so any template CSS (layered or
+   Styling sits in @layer plg-content-youtube, so any template CSS (layered or
    not) wins without extra specificity. Theme it with the custom properties below,
    or override the whole file at media/templates/site/<template>/css/plg_content_youtube/youtube.css.
+   Only the few rules that keep the thumbnail inside the 16:9 frame stay outside
+   the layer (see the bottom of this file).
    ========================================================================== */
 
 @layer plg-content-youtube {
@@ -32,7 +34,6 @@
 	}
 
 	.youtube__summary {
-		display: grid;
 		block-size: 100%;
 		cursor: pointer;
 		list-style: none;
@@ -49,15 +50,10 @@
 			outline: 3px solid var(--youtube-focus-color);
 			outline-offset: -6px;
 		}
-
-		.youtube__details[open] & {
-			display: none;
-		}
 	}
 
 	.youtube__thumbnail {
 		inline-size: 100%;
-		block-size: 100%;
 		object-fit: cover; /* hqdefault is 4:3 with black bars; cover crops them away */
 	}
 
@@ -116,4 +112,26 @@
 		color: var(--youtube-caption-color);
 		font-size: .9em;
 	}
+}
+
+/* --------------------------------------------------------------------------
+   Layout essentials, deliberately outside the layer.
+   Unlayered resets such as Bootstrap's reboot (Cassiopeia) ship
+   `summary { display: list-item }` and `img { height: auto }`, which beat every
+   layered rule. The thumbnail then keeps its own 4:3 height and the 16:9
+   frame (overflow: hidden) cuts off the bottom. One class selector each
+   still lets a template override these.
+   -------------------------------------------------------------------------- */
+
+.youtube__summary {
+	display: grid;
+	grid-template: 100% / 100%; /* a definite row, so the thumbnail's 100% block-size resolves */
+}
+
+.youtube__details[open] .youtube__summary {
+	display: none;
+}
+
+.youtube__thumbnail {
+	block-size: 100%;
 }

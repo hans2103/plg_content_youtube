@@ -34,7 +34,7 @@ This plugin is primarily designed for use on HKweb projects and as such priority
 The plugin's layout and stylesheet may be overridden following the Joomla! override conventions.
 
 * Layout: copy `layouts/plugins/content/youtube/embed.php` to `templates/<template_name>/html/layouts/plugins/content/youtube/embed.php`
-* Styling: the stylesheet is wrapped in `@layer plg-content-youtube`, so any template CSS wins. Theme it with the custom properties on `.youtube` (`--youtube-play-background`, `--youtube-radius`, …), or replace the file via `media/templates/site/<template_name>/css/plg_content_youtube/youtube.css`
+* Styling: the stylesheet is wrapped in `@layer plg-content-youtube`, so any template CSS wins. Only the three layout rules that keep the thumbnail inside the 16:9 frame (`display: grid` on the summary, hiding it when open, and the thumbnail's `block-size`) sit outside the layer, so unlayered resets such as Bootstrap's `summary { display: list-item }` and `img { height: auto }` in Cassiopeia cannot crop the thumbnail. Theme it with the custom properties on `.youtube` (`--youtube-play-background`, `--youtube-radius`, …), or replace the file via `media/templates/site/<template_name>/css/plg_content_youtube/youtube.css`
 
 ### Release steps
 
