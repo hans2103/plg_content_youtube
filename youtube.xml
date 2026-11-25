@@ -45,6 +45,15 @@
 					<option value="hqdefault">PLG_CONTENT_YOUTUBE_THUMBNAILQUALITY_HQDEFAULT</option>
 					<option value="maxresdefault">PLG_CONTENT_YOUTUBE_THUMBNAILQUALITY_MAXRESDEFAULT</option>
 				</field>
+				<field
+					name="thumbnail_sizes"
+					type="text"
+					label="PLG_CONTENT_YOUTUBE_THUMBNAILSIZES_LABEL"
+					description="PLG_CONTENT_YOUTUBE_THUMBNAILSIZES_DESC"
+					hint="(min-width: 80rem) 80rem, 100vw"
+					default=""
+					filter="string"
+				/>
 			</fieldset>
 		</fields>
 	</config>
