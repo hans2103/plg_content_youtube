@@ -56,6 +56,14 @@ if ($params->get('thumbnail_quality', 'hqdefault') === 'maxresdefault') {
 	$srcset[] = $thumbnailBase . 'maxresdefault.jpg 1280w';
 }
 
+// The width the thumbnail takes in the template, so the browser picks the right srcset entry.
+// Empty falls back to the old default, which suits a full-width embed up to 80rem.
+$sizes = trim((string) $params->get('thumbnail_sizes', ''));
+
+if ($sizes === '') {
+	$sizes = '(min-width: 80rem) 80rem, 100vw';
+}
+
 $playLabel   = $title !== '' ? Text::sprintf('PLG_CONTENT_YOUTUBE_PLAY_VIDEO_TITLE', $title) : Text::_('PLG_CONTENT_YOUTUBE_PLAY_VIDEO');
 $iframeTitle = $title !== '' ? $title : Text::_('PLG_CONTENT_YOUTUBE_IFRAME_TITLE');
 $playerUrl   = 'https://www.youtube-nocookie.com/embed/' . rawurlencode($id) . '?' . http_build_query(['rel' => 0, 'autoplay' => 1]);
@@ -67,7 +75,7 @@ $wrapper     = trim('youtube ' . $params->get('wrapper_class', ''));
 			<img class="youtube__thumbnail"
 				src="<?php echo $escape($thumbnailBase . 'hqdefault.jpg'); ?>"
 				srcset="<?php echo $escape(implode(', ', $srcset)); ?>"
-				sizes="(min-width: 80rem) 80rem, 100vw"
+				sizes="<?php echo $escape($sizes); ?>"
 				width="1280" height="720" alt=""
 				<?php echo $priority ? 'fetchpriority="high"' : 'loading="lazy"'; ?> decoding="async">
 			<span class="youtube__play" aria-hidden="true">

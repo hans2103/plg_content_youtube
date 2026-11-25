@@ -16,6 +16,12 @@ The quoted text becomes the visible caption, the accessible name of the play but
 * Joomla! 5.0 or newer (tested on 6.2)
 * PHP 8.0 or newer
 
+## Settings
+
+* **Wrapper Class**: extra class on the `<figure>`.
+* **Thumbnail Quality**: `hqdefault` (always available) or `maxresdefault`, which adds a 1280w thumbnail to the `srcset` (not every older video has one).
+* **Thumbnail Sizes**: the `sizes` attribute of the thumbnail, so the browser picks the right `srcset` entry for the width the video has in your template. Empty uses `(min-width: 80rem) 80rem, 100vw` (a full-width embed). For a text column, for example: `(min-width: 60rem) 57rem, calc(100vw - 2rem)`.
+
 ## Content Security Policy
 
 When your site sends a CSP, allow:
